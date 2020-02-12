@@ -16,12 +16,44 @@ public class Task {
 
         Map<Integer, String> sortedNames = sortNamesAndPutIntoMap(names);
 
-        Map<Integer, String> valuesOfLetters = getMapWithValuesOfLetters();
+        Map<Integer, String> mapOfLetters = getMapWithValuesOfLetters();
+
+        List<Integer> valuesOfKeysMapOfLetters = new ArrayList<>(mapOfLetters.keySet());
+
+        List<Integer> valuesOfKeysSortedNames = new ArrayList<>(sortedNames.keySet());
 
 
-        System.out.println();
+        List<Integer> valuesOfEachName = getValuesOfEachName(sortedNames, mapOfLetters, valuesOfKeysMapOfLetters);
 
 
+
+        System.out.println(valuesOfEachName);
+
+
+    }
+
+    private static List<Integer> getValuesOfEachName(Map<Integer, String> sortedNames, Map<Integer, String> mapOfLetters, List<Integer> valuesOfKeysMapOfLetters) {
+
+        List<Integer> valuesOfEachName = new ArrayList<>();
+        int valueOfName = 0;
+        for (int i = 1; i < sortedNames.size() + 1; i++) {
+
+            String s = sortedNames.get(i);
+            String[] arraysStrings = s.split("");
+
+            for (int j = 0; j < s.length(); j++) {
+
+                for (int k = 0; k < mapOfLetters.size() + 1; k++) {
+
+                    if (arraysStrings[j].equals(mapOfLetters.get(k))) {
+                        valueOfName += valuesOfKeysMapOfLetters.get(k - 1);
+                    }
+                }
+            }
+            valuesOfEachName.add(valueOfName);
+            valueOfName = 0;
+        }
+        return valuesOfEachName;
     }
 
     private static Map<Integer, String> getMapWithValuesOfLetters() {
@@ -68,4 +100,5 @@ public class Task {
 
 
     }
+
 }
