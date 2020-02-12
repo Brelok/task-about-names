@@ -16,9 +16,23 @@ public class Task {
 
         Map<Integer, String> sortedNames = sortNamesAndPutIntoMap(names);
 
-        System.out.println(sortedNames);
+        Map<Integer, String> valuesOfLetters = getMapWithValuesOfLetters();
 
 
+        System.out.println();
+
+
+    }
+
+    private static Map<Integer, String> getMapWithValuesOfLetters() {
+
+        String[] alphabet = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+
+        Map<Integer, String> map = new HashMap<>();
+        for (int i = 1; i < alphabet.length + 1; i++) {
+            map.put(i, alphabet[i - 1]);
+        }
+        return map;
     }
 
     private static Map<Integer, String> sortNamesAndPutIntoMap(List<String> list) {
@@ -28,7 +42,7 @@ public class Task {
 
         Map<Integer, String> map = new HashMap<>();
 
-        for (int i = 1; i < sortedName.size()+1; i++) {
+        for (int i = 1; i < sortedName.size() + 1; i++) {
             map.put(i, sortedName.get(i - 1));
         }
 
