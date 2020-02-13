@@ -16,19 +16,27 @@ public class Task {
 
         Map<Integer, String> sortedNames = sortNamesAndPutIntoMap(names);
 
-        Map<Integer, String> mapOfLetters = getMapWithValuesOfLetters();
+        Map<Integer, String> mapOfAlphabet = getMapWithValuesOfAlphabet();
 
-        List<Integer> valuesOfKeysMapOfLetters = new ArrayList<>(mapOfLetters.keySet());
+        List<Integer> valuesOfKeysMapOfAlphabet = new ArrayList<>(mapOfAlphabet.keySet());
 
         List<Integer> valuesOfKeysSortedNames = new ArrayList<>(sortedNames.keySet());
 
+        List<Integer> valuesOfEachName = getValuesOfEachName(sortedNames, mapOfAlphabet, valuesOfKeysMapOfAlphabet);
 
-        List<Integer> valuesOfEachName = getValuesOfEachName(sortedNames, mapOfLetters, valuesOfKeysMapOfLetters);
+        int result = multiplyValueOfEachNameByValuesOfKeys(valuesOfEachName, valuesOfKeysSortedNames);
 
+        System.out.println(result);
 
+    }
 
-        System.out.println(valuesOfEachName);
+    private static int multiplyValueOfEachNameByValuesOfKeys(List<Integer> valuesOfEachName, List<Integer> valuesOfKeysSortedNames) {
+        int result = 0;
 
+        for (int i = 0; i < valuesOfEachName.size(); i++) {
+            result += valuesOfEachName.get(i) * valuesOfKeysSortedNames.get(i);
+        }
+        return result;
 
     }
 
@@ -36,17 +44,17 @@ public class Task {
 
         List<Integer> valuesOfEachName = new ArrayList<>();
         int valueOfName = 0;
-        for (int i = 1; i < sortedNames.size() + 1; i++) {
+        for (int i = 1; i < sortedNames.size() + 1; i++) { //this is map, so I need add +1, so that I get last position
 
             String s = sortedNames.get(i);
             String[] arraysStrings = s.split("");
 
             for (int j = 0; j < s.length(); j++) {
 
-                for (int k = 0; k < mapOfLetters.size() + 1; k++) {
+                for (int k = 0; k < mapOfLetters.size() + 1; k++) { //same here
 
                     if (arraysStrings[j].equals(mapOfLetters.get(k))) {
-                        valueOfName += valuesOfKeysMapOfLetters.get(k - 1);
+                        valueOfName += valuesOfKeysMapOfLetters.get(k - 1); // this is list, so I need add -1
                     }
                 }
             }
@@ -56,7 +64,7 @@ public class Task {
         return valuesOfEachName;
     }
 
-    private static Map<Integer, String> getMapWithValuesOfLetters() {
+    private static Map<Integer, String> getMapWithValuesOfAlphabet() {
 
         String[] alphabet = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 
@@ -84,7 +92,6 @@ public class Task {
     private static List<String> getNamesFromFile(Path path) {
 
         StringBuilder stringBuilder = new StringBuilder();
-        List<String> list = new ArrayList<>();
         try {
             for (String line :
                     Files.readAllLines(path)) {
@@ -97,7 +104,6 @@ public class Task {
         String[] namesArray = stringBuilder.toString().split(",");
 
         return Arrays.asList(namesArray);
-
 
     }
 
